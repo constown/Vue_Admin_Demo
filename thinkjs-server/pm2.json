@@ -1,0 +1,15 @@
+{
+  "apps": [{
+    "name": "think-server",
+    "script": "production.js",
+    "cwd": "E:\HelloVue\项目\think-server",
+    "exec_mode": "fork",
+    "max_memory_restart": "1G",
+    "autorestart": true,
+    "node_args": [],
+    "args": [],
+    "env": {
+      
+    }
+  }]
+}
