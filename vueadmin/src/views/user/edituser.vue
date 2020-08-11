@@ -58,9 +58,9 @@ export default {
     this.rolelist = res.rolelist
   },
   methods: {
-    onSubmit() {
-      this.$message('资料修改成功!')
-      updateUser(this.form);
+    async onSubmit() {
+      const res = await updateUser(this.form)
+      this.$message(`${res.msg}`)
       this.$router.push('/user/userlist')
     },
     onCancel() {

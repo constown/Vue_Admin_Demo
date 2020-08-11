@@ -113,14 +113,14 @@ export default {
         confirmButtonText: '删除',
         cancelButtonText: '取消'
       })
-        .then (async () => {
+        .then (async (response) => {
           this.listLoading = true
-          await deluser({ id })
+          let res = await deluser({ id })
           this.listLoading = false
           this.fetchData()
           this.$message({
             type: 'info',
-            message: '删除成功'
+            message: `${res.msg}`
           })
         })
     }

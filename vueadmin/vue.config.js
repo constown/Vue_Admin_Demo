@@ -27,7 +27,7 @@ module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: process.env.NODE_ENV === 'production',
+  lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
     port: port,
@@ -42,8 +42,6 @@ module.exports = {
         pathRewrite: {
           '^/api': ''
         }
-      },
-
       }
     }
     // before: require('./mock/mock-server.js')

@@ -88,12 +88,10 @@ export default {
 
         this.list = response.productlist;
         this.total = response.total;
-        console.log(response)
         this.listLoading = false
       })
     },
     getPageUsers(page){
-        console.log(page);
         productlist({page:page}).then(response => {
 
         this.list = response.productlist;

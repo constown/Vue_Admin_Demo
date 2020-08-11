@@ -48,11 +48,11 @@ export function adduser(data) {
   })
 }
 
-export function rulelist(params){
+export function rulelist(params) {
   return request({
-      url:'/admin/rule/rulelist',
-      method:"get",
-      params
+    url:'/admin/rule/rulelist',
+    method:"get",
+    params
   })
 }
 

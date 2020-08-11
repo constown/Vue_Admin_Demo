@@ -20,8 +20,12 @@ module.exports = class extends Base {
 
   async deluserAction() {
     const userid = this.get('id');
-    await this.model('member').where({id: userid}).delete();
-    this.json({msg: '删除成功'});
+    if (userid === '1') {
+      this.json({msg:'admin禁止删除'})
+    } else {
+      await this.model('member').where({id: userid}).delete();
+      this.json({msg: '删除成功'});
+    }
   }
 
   async userinfoAction() {
@@ -44,37 +48,41 @@ module.exports = class extends Base {
 
   async updateUserAction() {
     const postUser = this.post();
-    if (this.method === 'POST' && postUser.password !== '') {
-      await this.model('member').where({ id: postUser.id }).update({
-        password: this.verifyPassword(postUser.password),
-        email: this.postUser.email,
-        mobile: this.postUser.mobile
-      });
+    if (postUser.id === 1) {
+      this.json({msg: 'admin禁止修改'});
     } else {
-      await this.model('member').where({ id: postUser.id }).update({
-        email: this.postUser.email,
-        mobile: this.postUser.mobile
-      });
-    }
-    const role = await this.model('auth_user_role').where({
-      user_id: postUser.id
-    }).find();
-    // 判断是否有设置该用户的权限角色，如果有就修改，否则就添加
-    if (role.id) {
-      await this.model('auth_user_role').where({
+      if (this.method === 'POST' && postUser.password !== '') {
+        await this.model('member').where({ id: postUser.id }).update({
+          password: this.verifyPassword(postUser.password),
+          email: postUser.email,
+          mobile: postUser.mobile
+        });
+      } else {
+        await this.model('member').where({ id: postUser.id }).update({
+          email: postUser.email,
+          mobile: postUser.mobile
+        });
+      }
+      const role = await this.model('auth_user_role').where({
         user_id: postUser.id
-      }).update({
-        role_id: postUser.id
-      });
-    } else {
-      await this.model('auth_user_role').add({
-        user_id: postUser.id,
-        role_id: postUser.role_id
+      }).find();
+      // 判断是否有设置该用户的权限角色，如果有就修改，否则就添加
+      if (role.id) {
+        await this.model('auth_user_role').where({
+          user_id: postUser.id
+        }).update({
+          role_id: postUser.id
+        });
+      } else {
+        await this.model('auth_user_role').add({
+          user_id: postUser.id,
+          role_id: postUser.role_id
+        });
+      }
+      this.json({
+        msg: '信息更新成功'
       });
     }
-    this.json({
-      msg: '信息更新成功'
-    });
   }
 
   async addUserAction() {
